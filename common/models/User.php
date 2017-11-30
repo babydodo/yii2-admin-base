@@ -1,4 +1,5 @@
 <?php
+
 namespace common\models;
 
 use Yii;
@@ -26,13 +27,12 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
-
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return 'user';
     }
 
     /**
@@ -51,8 +51,56 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            ['username', 'trim'],
+            ['username', 'required'],
+            ['username', 'unique', 'targetClass' => '\common\models\User'],
+            ['username', 'string', 'min' => 2, 'max' => 255],
+
+            ['email', 'trim'],
+            ['email', 'required'],
+            ['email', 'email'],
+            ['email', 'string', 'max' => 255],
+            ['email', 'unique', 'targetClass' => '\common\models\User'],
+
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id'         => 'ID',
+            'username'   => '用户名',
+            'email'      => '邮箱',
+            'status'     => '状态',
+            'statusStr'  => '状态',
+            'created_at' => '创建时间',
+            'updated_at' => '更新时间',
+        ];
+    }
+
+    /**
+     * 增加statusStr属性, 用户状态字符串
+     * @return string
+     */
+    public function getStatusStr()
+    {
+        return $this->status == self::STATUS_ACTIVE ? '正常' : '禁用';
+    }
+
+    /**
+     * 所有用户状态
+     * @return array
+     */
+    public static function allStatus()
+    {
+        return [
+            self::STATUS_ACTIVE  => '正常',
+            self::STATUS_DELETED => '禁用',
         ];
     }
 
@@ -73,8 +121,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Finds user by username
-     *
+     * 根据用户名查询对应用户
      * @param string $username
      * @return static|null
      */
@@ -84,38 +131,36 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Finds user by password reset token
-     *
+     * 根据密码重置令牌查询用户
      * @param string $token password reset token
      * @return static|null
      */
     public static function findByPasswordResetToken($token)
     {
-        if (!static::isPasswordResetTokenValid($token)) {
+        if(!static::isPasswordResetTokenValid($token)) {
             return null;
         }
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
+            'status'               => self::STATUS_ACTIVE,
         ]);
     }
 
     /**
-     * Finds out if password reset token is valid
-     *
+     * 判断密码重置令牌是否有效
      * @param string $token password reset token
      * @return bool
      */
     public static function isPasswordResetTokenValid($token)
     {
-        if (empty($token)) {
+        if(empty($token)) {
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
-        return $timestamp + $expire >= time();
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
+        $expire    = Yii::$app->params['user.passwordResetTokenExpire'];
+        return $timestamp + $expire>=time();
     }
 
     /**
@@ -143,10 +188,9 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
+     * 验证密码
+     * @param string $password
+     * @return bool
      */
     public function validatePassword($password)
     {
@@ -154,9 +198,9 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Generates password hash from password and sets it to the model
-     *
+     * 生成密码对应的哈希值
      * @param string $password
+     * @throws \yii\base\Exception
      */
     public function setPassword($password)
     {
@@ -164,7 +208,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Generates "remember me" authentication key
+     * 生成自动登录验证字符串
      */
     public function generateAuthKey()
     {
@@ -172,7 +216,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Generates new password reset token
+     * 生成密码重置令牌
      */
     public function generatePasswordResetToken()
     {
@@ -180,7 +224,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Removes password reset token
+     * 移除密码重置令牌
      */
     public function removePasswordResetToken()
     {

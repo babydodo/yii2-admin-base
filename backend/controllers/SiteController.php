@@ -1,11 +1,11 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\LoginForm;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
 
 /**
  * Site controller
@@ -54,8 +54,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
-     *
+     * 后台首页
      * @return string
      */
     public function actionIndex()
@@ -64,8 +63,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Login action.
-     *
+     * 登陆
      * @return string
      */
     public function actionLogin()
@@ -80,6 +78,7 @@ class SiteController extends Controller
         } else {
             $model->password = '';
 
+            $this->layout = 'main-login';
             return $this->render('login', [
                 'model' => $model,
             ]);
@@ -87,8 +86,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Logout action.
-     *
+     * 注销
      * @return string
      */
     public function actionLogout()

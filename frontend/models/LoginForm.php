@@ -1,11 +1,12 @@
 <?php
-namespace common\models;
+namespace frontend\models;
 
+use common\models\User;
 use Yii;
 use yii\base\Model;
 
 /**
- * Login form
+ * 前台登陆表单模型
  */
 class LoginForm extends Model
 {
@@ -15,43 +16,51 @@ class LoginForm extends Model
 
     private $_user;
 
-
     /**
+     * 字段验证规则
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            // username and password are both required
             [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
+            // 自定义验证密码规则
             ['password', 'validatePassword'],
         ];
     }
 
     /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
+     * 字段名
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username'   => '用户名',
+            'password'   => '密码',
+            'rememberMe' => '自动登陆',
+        ];
+    }
+
+    /**
+     * 验证密码 (rule)
+     * @param string $attribute
+     * @param array $params
      */
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, '用户名或密码错误.');
             }
         }
     }
 
     /**
-     * Logs in a user using the provided username and password.
-     *
-     * @return bool whether the user is logged in successfully
+     * 登陆验证
+     * @return bool
      */
     public function login()
     {
@@ -63,8 +72,7 @@ class LoginForm extends Model
     }
 
     /**
-     * Finds user by [[username]]
-     *
+     * 根据username查询用户账号
      * @return User|null
      */
     protected function getUser()
