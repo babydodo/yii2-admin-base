@@ -1,11 +1,12 @@
 <?php
-namespace common\models;
+namespace frontend\models;
 
+use common\models\User;
 use Yii;
 use yii\base\Model;
 
 /**
- * Login form
+ * 前台登陆表单模型
  */
 class LoginForm extends Model
 {
@@ -14,7 +15,6 @@ class LoginForm extends Model
     public $rememberMe = true;
 
     private $_user;
-
 
     /**
      * @inheritdoc
@@ -43,7 +43,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, '用户名或密码错误.');
             }
         }
     }
