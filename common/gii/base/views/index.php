@@ -113,7 +113,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 // 动作列按钮设定
                 [
-                    'class' => 'kartik\grid\ActionColumn',
+                    'class' => 'kartik\grid\ActionColumn', 'header' => '操作',
 <?php if (1==2) {?>
                     'template' => \shmilyzxt\kartikcrud\ShmilyzxtHelper::filterActionColumn(['view','delete']),
 <?php }else{?>

@@ -101,7 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 // 动作列按钮设定
                 [
-                    'class' => 'kartik\grid\ActionColumn',
+                    'class' => 'kartik\grid\ActionColumn', 'header' => '操作',
                     'template' => ShmilyzxtHelper::filterActionColumn(['view', 'update', 'reset-pwd','delete']),
 
                     // 额外自定义按钮

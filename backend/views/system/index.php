@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 // 动作列按钮设定
                 [
-                    'class' => 'kartik\grid\ActionColumn',
+                    'class' => 'kartik\grid\ActionColumn', 'header' => '操作',
                     'template' => ShmilyzxtHelper::filterActionColumn(['update', 'delete']),
 
                     'updateOptions' => ['role'=>'modal-remote', 'title'=>'更新', 'data-toggle' =>'tooltip'],

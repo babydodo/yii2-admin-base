@@ -13,7 +13,7 @@ use shmilyzxt\kartikcrud\ShmilyzxtHelper;
 /* @var $searchModel backend\controllers\AdminuserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title                   = '管理员列表';
+$this->title = '管理员列表';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="adminuser-index">
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'bordered'     => false,
 
             // 布局设定
-            'panel'        => [
+            'panel' => [
                 'type'    => 'primary',
                 'heading' => '<i class="glyphicon glyphicon-list"></i> 管理员列表',
                 'before'  => BulkButtonWidget::widget([
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             // 工具组件
-            'toolbar'      => [
+            'toolbar' => [
                 [
                     'content' => Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], [
                             'role'  => 'modal-remote',
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             // 主体内容
-            'columns'      => [
+            'columns' => [
                 // 复选框列
                 [
                     'class' => 'kartik\grid\CheckboxColumn',
@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 // 动作列按钮设定
                 [
-                    'class'    => 'kartik\grid\ActionColumn',
+                    'class' => 'kartik\grid\ActionColumn', 'header' => '操作',
 //                    'template' => ShmilyzxtHelper::filterActionColumn(['view', 'update', 'reset-pwd', 'delete']),
                     'template' => Helper::filterActionColumn('{view} {update} {reset-pwd} {delete}'),
 
