@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\controllers;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Adminuser;
+use common\models\System;
 
 /**
- * common\models\Adminuser 模型的表单搜索查询类.
+ * common\models\System 模型的表单搜索查询类.
  */
-class AdminuserSearch extends Adminuser
+class SystemSearch extends System
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class AdminuserSearch extends Adminuser
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['username', 'created_at', 'updated_at', 'email'], 'safe'],
+            [['id'], 'integer'],
+            [['name', 'key', 'value'], 'safe'],
         ];
     }
 
@@ -39,7 +39,7 @@ class AdminuserSearch extends Adminuser
      */
     public function search($params)
     {
-        $query = Adminuser::find();
+        $query = System::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,16 +55,11 @@ class AdminuserSearch extends Adminuser
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'email', $this->email]);
-
-        if (strpos($this->created_at, ' - ') !== false ) {
-            list($start_date, $end_date) = explode(' - ', $this->created_at);
-            $query->andFilterWhere(['between', 'created_at', strtotime($start_date), strtotime($end_date.' 23:59:59')]);
-        }
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'key', $this->key])
+            ->andFilterWhere(['like', 'value', $this->value]);
 
         return $dataProvider;
     }

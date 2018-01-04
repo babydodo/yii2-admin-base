@@ -100,8 +100,7 @@ return [
             'bundles' => [
                 'yii\web\JqueryAsset' => [
                     'js' => [
-                        // 为兼容yii2-admin插件, 替换yii自带的jquery.js
-                        dirname($_SERVER['SCRIPT_NAME']).'/js/jquery-2.2.4-min.js'
+                        '/js/jquery-2.2.4-min.js'
                     ],
                     'sourcePath' => null,  // 防止在 frontend/web/asset 下生产文件
                 ],
@@ -113,8 +112,8 @@ return [
         'class' => 'mdm\admin\components\AccessControl',
         // 设置允许访问路由
         'allowActions' => [
-            '*',
-//            'site/*',
+//            '*',
+            'site/*',
 //            'admin/*',
         ]
     ],

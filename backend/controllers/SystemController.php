@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\SystemSearch;
 use Yii;
 use common\models\System;
 use yii\web\Controller;

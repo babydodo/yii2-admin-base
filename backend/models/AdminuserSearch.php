@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\controllers;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Classroom;
+use common\models\Adminuser;
 
 /**
- * common\models\Classroom 模型的表单搜索查询类.
+ * common\models\Adminuser 模型的表单搜索查询类.
  */
-class ClassroomSearch extends Classroom
+class AdminuserSearch extends Adminuser
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class ClassroomSearch extends Classroom
     public function rules()
     {
         return [
-            [['id', 'type', 'amount'], 'integer'],
-            [['number', 'name'], 'safe'],
+            [['id', 'status'], 'integer'],
+            [['username', 'created_at', 'updated_at', 'email'], 'safe'],
         ];
     }
 
@@ -39,7 +39,7 @@ class ClassroomSearch extends Classroom
      */
     public function search($params)
     {
-        $query = Classroom::find();
+        $query = Adminuser::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,12 +55,16 @@ class ClassroomSearch extends Classroom
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'type' => $this->type,
-            'amount' => $this->amount,
+            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'number', $this->number])
-            ->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'email', $this->email]);
+
+        if (strpos($this->created_at, ' - ') !== false ) {
+            list($start_date, $end_date) = explode(' - ', $this->created_at);
+            $query->andFilterWhere(['between', 'created_at', strtotime($start_date), strtotime($end_date.' 23:59:59')]);
+        }
 
         return $dataProvider;
     }

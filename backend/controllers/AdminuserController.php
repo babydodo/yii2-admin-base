@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\AddAdminForm;
+use backend\models\AdminuserSearch;
 use backend\models\ResetpwdForm;
 use Yii;
 use common\models\Adminuser;

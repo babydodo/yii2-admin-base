@@ -9,7 +9,7 @@ use yii\web\AssetBundle;
  */
 class AdminLteAsset extends AssetBundle
 {
-    public $sourcePath = '@webroot';
+//    public $sourcePath = '@webroot';
     public $basePath = '@webroot';
     public $baseUrl = '@web';
 

@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\ResetpwdForm;
+use backend\models\UserSearch;
 use common\models\SignupForm;
 use common\models\User;
 use Yii;
