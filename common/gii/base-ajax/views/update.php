@@ -16,10 +16,6 @@ use kartik\form\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 /* @var $form kartik\form\ActiveForm */
-
-$this->title = <?= $generator->generateString('修改 ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>;
-$this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
-$this->params['breadcrumbs'][] = <?= $generator->generateString('修改') ?>;
 ?>
 
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update">
@@ -29,21 +25,11 @@ $this->params['breadcrumbs'][] = <?= $generator->generateString('修改') ?>;
 
         <?php foreach ($generator->getColumnNames() as $attribute) {
             if (in_array($attribute, $safeAttributes)) {
-                if($attribute != 'id') {
                 echo "    <?= " . str_replace(",[
                      'showLabels'=>false
                 ]",'',$generator->generateActiveField($attribute)) . " ?>\n\n        ";
-                }
             }
         } ?>
-
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-6">
-                    <button type="submit" class="btn btn-primary">提交</button>
-                    <button type="reset" class="btn btn-danger">重置</button>
-                </div>
-            </div>
-
 <?= "<?php " ?>ActiveForm::end(); ?>
 
     </div>

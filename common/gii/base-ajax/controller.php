@@ -120,21 +120,38 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * 插入一条记录 <?= $modelClass ?>.
      * 只允许Ajax请求
      * @return mixed
+     * @throws \Exception
      */
     public function actionCreate()
     {
         $model = new <?= $modelClass ?>();
 
-        if(Yii::$app->request->isPost) {
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
             if($model->load(Yii::$app->request->post()) && $model->save()){
-                Yii::$app->getSession()->setFlash('info', '添加成功...');
-                return $this->redirect(['index']);
+                return [
+                    'forceClose'  => true,
+                    'forceReload' => '#crud-datatable-pjax',
+                ];
+            } else {
+                return [
+                    'title'   => '创建 <?= $modelClass ?>',
+                    'size'    => 'large',
+                    'content' => $this->renderAjax('create', [
+                        'model' => $model,
+                    ]),
+                    'footer' => Html::button('<i class="glyphicon glyphicon-ban-circle"></i> 关闭', [
+                            'class'        => 'btn btn-danger',
+                            'data-dismiss' => 'modal'
+                        ])
+                        .Html::button('<i class="glyphicon glyphicon-ok"></i> 保存', [
+                            'class' => 'btn btn-primary',
+                            'type'  => 'submit'
+                        ])
+                ];         
             }
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        throw new NotFoundHttpException('页面不存在~');
     }
 
     /**
@@ -142,21 +159,38 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * 只允许Ajax请求
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return mixed
+     * @throws \Exception
      */
     public function actionUpdate(<?= $actionParams ?>)
     {
         $model = $this->findModel(<?= $actionParams ?>);
 
-        if(Yii::$app->request->isPost) {
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
             if($model->load(Yii::$app->request->post()) && $model->save()){
-                Yii::$app->getSession()->setFlash('info', '修改成功...');
-                return $this->redirect(['index']);
+                return [
+                    'forceClose'  => true,
+                    'forceReload' => '#crud-datatable-pjax',
+                ];
+            } else {
+                 return [
+                    'title'   => '更新 <?= $modelClass ?> #'.<?= $actionParams ?>,
+                    'size'    => 'large',
+                    'content' => $this->renderAjax('update', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('<i class="glyphicon glyphicon-ban-circle"></i> 关闭', [
+                        'class'        => 'btn btn-danger',
+                        'data-dismiss' => 'modal',
+                    ])
+                    . Html::button('<i class="glyphicon glyphicon-ok"></i> 保存', [
+                        'class' => 'btn btn-primary',
+                        'type'  => 'submit'
+                    ])
+                ];        
             }
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        throw new NotFoundHttpException('页面不存在~');
     }
 
     /**

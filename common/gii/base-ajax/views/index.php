@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'content' =>
                         Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], [
-                            'data-pjax' => '0',
+                            'role'  => 'modal-remote',
                             'title' => '新增',
                             'class' => 'btn btn-default'
                         ])
@@ -131,6 +131,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php }?>
 
                     'viewOptions'   => ['role'=>'modal-remote', 'title'=>'查看', 'data-toggle' =>'tooltip'],
+                    'updateOptions' => ['role'=>'modal-remote', 'title'=>'更新', 'data-toggle' =>'tooltip'],
                     'deleteOptions' => [
                         'role'                  => 'modal-remote',
                         'title'                 => '删除',

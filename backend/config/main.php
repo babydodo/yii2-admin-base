@@ -20,6 +20,7 @@ return [
                     'class'     => 'shmilyzxt\kartikcrud\generators\Generator',
                     'templates' => [
                         '基础模板' => '@common/gii/base',
+                        '基础模板-ajax' => '@common/gii/base-ajax',
                     ],
                 ],
             ],
@@ -114,7 +115,6 @@ return [
         'allowActions' => [
 //            '*',
             'site/*',
-//            'admin/*',
         ]
     ],
 
