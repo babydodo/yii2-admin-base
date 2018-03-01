@@ -35,7 +35,8 @@ AdminLteAsset::register($this);
         <section class="content">
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>            <?= Alert::widget() ?>
+            ]) ?>
+            <?= Alert::widget() ?>
             <?= $content ?>
         </section>
     </div>
