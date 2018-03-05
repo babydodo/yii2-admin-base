@@ -23,7 +23,11 @@ return [
     'components' => [
         // 请求
         'request' => [
-            'csrfParam' => '_csrf-api',
+            'cookieValidationKey' => '',
+            // 增加Json参数解析
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         // 响应
         'response' => [

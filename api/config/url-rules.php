@@ -16,15 +16,14 @@ function baseUrlRules($unit)
  * 路由规则配置
  */
 $urlRuleConfigs = [
-    [
-        'controller' => ['v1/system']
-    ],
+    //
     [
         'controller' => ['v1/user'],
         'extraPatterns' => [
             'POST login' => 'login',
-            'GET,OPTIONS user-profile' => 'user-profile', // OPTIONS配合支持跨域请求
+            'POST,OPTIONS user-profile' => 'user-profile', // OPTIONS配合支持跨域请求
         ],
+        'except'=>['delete'] // 禁止delete请求
     ],
 ];
 

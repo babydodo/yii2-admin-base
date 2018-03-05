@@ -20,8 +20,7 @@ class UserController extends ActiveController
      */
     public function behaviors() {
         return array_merge(parent::behaviors(), [
-            'authenticator' =>
-                [
+            'authenticator' => [
                     'class' => HttpBearerAuth::className(),
                     // 不需要认证的方法
                     'optional' => [
