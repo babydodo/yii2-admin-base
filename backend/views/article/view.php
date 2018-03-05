@@ -1,33 +1,37 @@
 <?php
 
 use kartik\detail\DetailView;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Adminuser */
+/* @var $model common\models\Article */
 ?>
 
-<div class="adminuser-view">
+<div class="article-view">
  
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             [
                 'attribute' => 'id',
-                // 'label' => 'Id',
+                // 'label' => 'ID',
             ],
             [
-                'attribute' => 'username',
-                // 'label' => 'Username',
+                'attribute' => 'title',
+                // 'label' => '标题',
             ],
             [
-                'attribute' => 'email',
-                // 'label' => 'Email',
+                'attribute' => 'title_image',
+                'format' => 'raw',
+                'value' => Html::img(Url::to('@uploadUrl/article/').$model->title_image, ['height' => 200]),
             ],
             [
                 'attribute' => 'status',
                 'value' => $model->getStatusStr(),
                 'format' => 'html',
             ],
+            'sort',
             'created_at:datetime',
             'updated_at:datetime',
         ],

@@ -25,7 +25,7 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
+    const STATUS_ACTIVE = 1;
 
     /**
      * @inheritdoc
@@ -84,12 +84,16 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * 增加statusStr属性, 用户状态字符串
+     * 增加statusStr属性, 状态图标
      * @return string
      */
     public function getStatusStr()
     {
-        return $this->status == self::STATUS_ACTIVE ? '正常' : '禁用';
+        if($this->status == self::STATUS_ACTIVE) {
+            return '<span class="glyphicon glyphicon-ok" style="color:#3c763d"></span>';
+        } else {
+            return '<span class="glyphicon glyphicon-remove" style="color:#a94442"></span>';
+        }
     }
 
     /**

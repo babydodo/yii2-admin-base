@@ -80,6 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'status',
                     'value'     => 'statusStr',
                     'filter'    => Adminuser::allStatus(),
+                    'format'    => 'html',
                 ],
                 [
                     'attribute'           => 'created_at',

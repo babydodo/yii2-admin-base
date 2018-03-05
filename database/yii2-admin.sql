@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2018-01-04 14:20:54
+-- Generation Time: 2018-03-05 10:17:56
 -- 服务器版本： 5.6.36-log
 -- PHP Version: 7.1.7
 
@@ -45,8 +45,33 @@ CREATE TABLE `adminuser` (
 --
 
 INSERT INTO `adminuser` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '', '$2y$13$.oZ12VokconfmXeaDQHNUOtYInXK5ExbCFHY84vSwv9bKa3pWrHt6', NULL, '450102@qq.com', 10, 1512028635, 1513143760),
+(1, 'admin', '', '$2y$13$.oZ12VokconfmXeaDQHNUOtYInXK5ExbCFHY84vSwv9bKa3pWrHt6', NULL, '450102@qq.com', 1, 1512028635, 1513143760),
 (3, 'admin33', 'ag61sd3DUdl-8Zgfn3S52t_oTc-W5R2x', '$2y$13$u8.D1vTQqsp/yIKOY3eyEehHd3A3.Naq.WT1sianZj2OMlHcC2mRS', NULL, '131654@qq.com', 0, 1512541300, 1513150880);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `article`
+--
+
+CREATE TABLE `article` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '标题',
+  `title_image` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '主图片',
+  `images` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '图片集',
+  `content` text COLLATE utf8_unicode_ci COMMENT '内容',
+  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `created_at` int(11) DEFAULT NULL COMMENT '创建时间',
+  `updated_at` int(11) DEFAULT NULL COMMENT '修改时间',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态 0隐藏 1显示'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='合伙人';
+
+--
+-- 转存表中的数据 `article`
+--
+
+INSERT INTO `article` (`id`, `title`, `title_image`, `images`, `content`, `sort`, `created_at`, `updated_at`, `status`) VALUES
+(2, '4564', '1520216037-97166.png', '[\"1520216037-2795.jpg\",\"1520216037-60004.jpg\",\"1520216037-45773.jpg\"]', '<p>65416459841</p><p>56165<br></p>', 0, 1520216037, 1520216037, 1);
 
 -- --------------------------------------------------------
 
@@ -150,6 +175,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/admin/user/view', 2, NULL, NULL, NULL, 1512728340, 1512728340),
 ('/adminuser', 2, NULL, NULL, NULL, 1513064462, 1513064462),
 ('/adminuser/index', 2, NULL, NULL, NULL, 1512726862, 1512726862),
+('/article', 2, NULL, NULL, NULL, 1520215602, 1520215602),
 ('/classroom', 2, NULL, NULL, NULL, 1513070834, 1513070834),
 ('/gii/*', 2, NULL, NULL, NULL, 1513068990, 1513068990),
 ('/gii/default/*', 2, NULL, NULL, NULL, 1513068990, 1513068990),
@@ -238,7 +264,8 @@ INSERT INTO `menu` (`id`, `name`, `parent`, `route`, `order`, `data`) VALUES
 (16, '个人信息', 15, '/personal/view', 5, 0x7b2269636f6e223a22666f6c646572227d),
 (17, '修改密码', 15, '/personal/change-pwd', 10, 0x7b2269636f6e223a226c6f636b227d),
 (18, '更新信息', 15, '/personal/update', 8, 0x7b2269636f6e223a2270656e63696c2d7371756172652d6f227d),
-(19, '系统配置', NULL, '/system', 15, 0x7b2269636f6e223a226c6170746f70227d);
+(19, '系统配置', NULL, '/system', 15, 0x7b2269636f6e223a226c6170746f70227d),
+(20, '文章管理', NULL, '/article', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -320,6 +347,12 @@ ALTER TABLE `adminuser`
   ADD UNIQUE KEY `password_reset_token` (`password_reset_token`) USING BTREE;
 
 --
+-- Indexes for table `article`
+--
+ALTER TABLE `article`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `auth_assignment`
 --
 ALTER TABLE `auth_assignment`
@@ -383,10 +416,15 @@ ALTER TABLE `user`
 ALTER TABLE `adminuser`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
+-- 使用表AUTO_INCREMENT `article`
+--
+ALTER TABLE `article`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- 使用表AUTO_INCREMENT `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- 使用表AUTO_INCREMENT `system`
 --

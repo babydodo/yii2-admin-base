@@ -12,9 +12,15 @@ return [
             'class'  => 'mdm\admin\Module',
 //            'layout' => false
         ],
-
-        // gii配置
-        'gii'         => [
+        // 富文本编辑器redactor
+        'redactor' => [
+            'class' => 'common\components\RedactorModule',
+            'uploadDir' => '@upload',
+            'uploadUrl' => '@uploadUrl',
+            'imageAllowExtensions'=>['jpg', 'png', 'gif'],
+        ],
+        // gii配置 正式环境请注释 todo
+        'gii' => [
             'generators' => [
                 'kartikcrud' => [
                     'class'     => 'shmilyzxt\kartikcrud\generators\Generator',

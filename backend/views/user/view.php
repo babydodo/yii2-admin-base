@@ -24,8 +24,9 @@ use kartik\detail\DetailView;
                 // 'label' => 'Email',
             ],
             [
-                'attribute' => 'statusStr',
-                // 'label' => 'Status',
+                'attribute' => 'status',
+                'value' => $model->getStatusStr(),
+                'format' => 'html',
             ],
             'created_at:datetime',
             'updated_at:datetime',

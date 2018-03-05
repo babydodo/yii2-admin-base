@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'statusStr',
-                // 'label' => 'Status',
+                'format' => 'html',
             ],
             'created_at:datetime',
             'updated_at:datetime',

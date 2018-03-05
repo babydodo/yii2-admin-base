@@ -1,6 +1,6 @@
 <?php
 
-use common\models\User;
+use common\models\Article;
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use kartik\grid\GridView;
@@ -9,13 +9,13 @@ use shmilyzxt\kartikcrud\BulkButtonWidget;
 use shmilyzxt\kartikcrud\ShmilyzxtHelper;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\controllers\UserSearch */
+/* @var $searchModel backend\models\ArticleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '用户列表';
+$this->title = '文章列表';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-index">
+<div class="article-index">
     <div id="ajaxCrudDatatable">
         <?= GridView::widget([
             'id'           => 'crud-datatable',
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 布局设定
             'panel' => [
                 'type'    => 'primary',
-                'heading' => '<i class="glyphicon glyphicon-list"></i> 用户列表',
+                'heading' => '<i class="glyphicon glyphicon-list"></i> 文章列表',
                 'before'  => BulkButtonWidget::widget([
                     'buttons' => Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; 删除选中项', ['bulk-delete'], [
                         'class'                => 'btn btn-danger',
@@ -49,14 +49,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'content' =>
                         Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], [
-                            'role'  => 'modal-remote',
-                            'title' => '新增用户',
+                            'data-pjax' => '0',
+                            'title' => '新增',
                             'class' => 'btn btn-default'
                         ])
                         .Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''], [
-                            'data-pjax' => true,
                             'class'     => 'btn btn-default',
-                            'title'     => '重置'
+                            'title'     => '刷新'
                     ])
                     .'{toggleData}'
                     .'{export}'
@@ -77,51 +76,32 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
 
                 // 数据列
-                'username',
-                'email',
-                [
-                    'attribute' => 'status',
-                    'value'     => 'statusStr',
-                    'filter'    => User::allStatus(),
-                    'format'    => 'html',
-                ],
-                [
-                    'attribute'           => 'created_at',
-                    'format'              => 'datetime',
-                    'filterType'          => \kartik\grid\GridView::FILTER_DATE_RANGE,
-                    'filterWidgetOptions' => ([
-                        'presetDropdown' => true,
-                        'convertFormat'  => true,
-                        'pluginOptions'  => [
-                            'locale' => [
-                                'format' => 'Y/m/d',
-                            ]
-                        ],
-                    ]),
-                ],
+                'title',
+                array(
+                    'attribute'=>'status',
+                    'value'=>'statusStr',
+                    'format' => 'html',
+                    'filter'=> Article::allStatus(),
+                ),
+                'sort',
 
                 // 动作列按钮设定
                 [
                     'class' => 'kartik\grid\ActionColumn', 'header' => '操作',
-                    'template' => ShmilyzxtHelper::filterActionColumn(['view', 'update', 'reset-pwd','delete']),
+                    'template' => ShmilyzxtHelper::filterActionColumn(['view', 'update', 'delete']),
+//                    'template' => Helper::filterActionColumn('{view} {update} {delete}'),
 
                     // 额外自定义按钮
-                    'buttons' => [
-                        'reset-pwd' => function($url, $model) {
-                            $options = [
-                                'role'                 => 'modal-remote',
-                                'title'                => '重置密码',
-                                'data-confirm'         => false,
-                                'data-method'          => false, // 覆盖yii默认实现的方法
-                                'data-request-method'  => 'get',
-                                'data-toggle'          => 'tooltip',
-                            ];
-                            return Html::a('<span class="glyphicon glyphicon-lock"></span>', $url, $options);
-                        },
-                    ],
+                    // 'buttons'  => [
+                    //    'audit' => function($url, $model) {
+                    //        $options = [
+                    //            // 可参照'deleteOptions'写
+                    //        ];
+                    //        return Html::a('<span class="glyphicon glyphicon-ok"></span>', $url, $options);
+                    //    },
+                    // ],
 
                     'viewOptions'   => ['role'=>'modal-remote', 'title'=>'查看', 'data-toggle' =>'tooltip'],
-                    'updateOptions' => ['role'=>'modal-remote', 'title'=>'更新', 'data-toggle' =>'tooltip'],
                     'deleteOptions' => [
                         'role'                  => 'modal-remote',
                         'title'                 => '删除',
@@ -134,7 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
             ],
-        ]) ?>
+        ])?>
     </div>
 </div>
 

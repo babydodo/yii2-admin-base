@@ -15,7 +15,6 @@ return [
         'request' => [
             'csrfParam' => '_csrf-api',
         ],
-        // todo
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
