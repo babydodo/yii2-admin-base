@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2018-03-05 10:17:56
+-- Generation Time: 2018-03-05 15:48:11
 -- 服务器版本： 5.6.36-log
 -- PHP Version: 7.1.7
 
@@ -306,7 +306,12 @@ CREATE TABLE `system` (
 --
 
 INSERT INTO `system` (`id`, `name`, `key`, `value`) VALUES
-(1, '配置', 'peizhi', 'peizhi');
+(1, '配置', 'peizhi', 'peizhi'),
+(2, 'test', 'config1', '1111'),
+(3, 'test2', 'config2', '2222'),
+(4, 'test3', 'config3', '33333'),
+(5, 'test4', 'config4', '4444'),
+(6, 'test5', 'config5', '5555');
 
 -- --------------------------------------------------------
 
@@ -320,6 +325,7 @@ CREATE TABLE `user` (
   `auth_key` varchar(32) NOT NULL,
   `password_hash` varchar(256) NOT NULL,
   `password_reset_token` varchar(256) DEFAULT NULL,
+  `access_token` varchar(60) DEFAULT NULL,
   `email` varchar(256) NOT NULL,
   `status` int(11) NOT NULL DEFAULT '10',
   `created_at` int(11) NOT NULL,
@@ -330,8 +336,9 @@ CREATE TABLE `user` (
 -- 转存表中的数据 `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'user', 'Z42kt9GdwvGCLd81x5_jP6_AE33MnYgu', '$2y$13$9zx2Vq57R8HZJ/29AdCcEuQv0x7MfaD6az2yy1xKuJxd4Cl.WrCK2', NULL, '450513@qq.com', 10, 1512117817, 1512705266);
+INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `access_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'user', 'Z42kt9GdwvGCLd81x5_jP6_AE33MnYgu', '$2y$13$9zx2Vq57R8HZJ/29AdCcEuQv0x7MfaD6az2yy1xKuJxd4Cl.WrCK2', NULL, NULL, '450513@qq.com', 10, 1512117817, 1512705266),
+(2, 'noip', 'dRdlPIEeUYQylM2jlktgZxQHkcYnDUCs', '$2y$13$UwH7IhMqKLfXgjsDEAXj8.2qHfde2hKEnA1KwsT3.8Dlps4QsMBYi', NULL, 'saiyAcqOGJvyqlyqIatReqsIB3iwuijy_1520228537', '45@qq.com', 1, 1520221185, 1520228537);
 
 --
 -- Indexes for dumped tables
@@ -429,12 +436,12 @@ ALTER TABLE `menu`
 -- 使用表AUTO_INCREMENT `system`
 --
 ALTER TABLE `system`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- 限制导出的表
 --
