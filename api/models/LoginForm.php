@@ -2,8 +2,9 @@
 namespace api\models;
 use yii\base\Model;
 use common\models\User;
+
 /**
- * Login form
+ * api登录模型
  * @property User $_user
  */
 class LoginForm extends Model
@@ -14,7 +15,7 @@ class LoginForm extends Model
     const GET_API_TOKEN = 'generate_api_token';
 
     /**
-     *
+     * 初始化
      */
     public function init ()
     {
@@ -58,8 +59,7 @@ class LoginForm extends Model
         ];
     }
     /**
-     * Logs in a user using the provided username and password.
-     *
+     * 用户名和密码登录
      * @return boolean|User
      */
     public function login()
@@ -73,7 +73,6 @@ class LoginForm extends Model
     }
     /**
      * 根据用户名获取用户的认证信息
-     *
      * @return User|null
      */
     protected function getUser()
@@ -94,4 +93,5 @@ class LoginForm extends Model
             $this->_user->save(false);
         }
     }
+
 }
